@@ -78,7 +78,6 @@
                     {{ session('message')[1] }}
                 </div>
             @endif
-            
             @yield('content')
         </div>
     </div>
