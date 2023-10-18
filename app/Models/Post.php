@@ -32,4 +32,35 @@ class Post extends Model
         return $this->hasMany(Reply::class);
     }
 
+    public function isOwner() {
+        return $this->owner->id === auth()->id();
+        // También es posible ponerlo de la siguiente forma
+        // return $this->owner == auth()->user();
+    }
+    
+    protected static function boot() {
+        parent::boot();
+
+        // static::creating(function($post) {
+        //     $post->user_id = auth()->id();
+        // });
+
+        static::deleting(function($post) {
+            if( ! App()->runningInConsole() ) {
+                if($post->replies()->count()) {
+                    // foreach($post->replies as $reply) {
+                    // 	if($reply->attachment) {
+                    // 		Storage::delete('replies/' . $reply->attachment);
+                    // 	}
+                    // }
+                    $post->replies()->delete();
+                }
+    
+                // if($post->attachment) {
+                // 	Storage::delete('posts/' . $post->attachment);
+                // }
+            }
+        });
+    }
+
 }

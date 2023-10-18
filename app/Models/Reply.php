@@ -34,4 +34,9 @@ class Reply extends Model
     	return $this->post->forum;
     }
 
+    public function isAuthor() {
+        return $this->autor->id === auth()->id();
+        // También es posible ponerlo de la siguiente forma
+        // return $this->owner == auth()->user();
+    }
 }

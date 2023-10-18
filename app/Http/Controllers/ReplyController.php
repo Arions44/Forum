@@ -69,6 +69,7 @@ class ReplyController extends Controller
      */
     public function destroy(Reply $reply)
     {
-        //
+        $reply->delete();
+		return back()->with('message', ['success', __('Respuesta eliminada correctamente')]);
     }
 }
