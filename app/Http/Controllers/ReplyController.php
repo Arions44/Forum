@@ -61,7 +61,11 @@ class ReplyController extends Controller
      */
     public function update(Request $request, Reply $reply)
     {
-        //
+        $request->validate([
+            'reply' => 'required',
+        ]);
+        $reply->update($request->all());
+        return back()->with('message', ['success', __('Respuesta eliminada correctamente')]);
     }
 
     /**
